@@ -1,0 +1,20 @@
+# Quartus Settings File for DE1-SoC 7-segment counter project (LED[1:0] only)
+
+# Clock input (CLOCK_50)
+set_location_assignment PIN_AF14 -to clk
+
+# Reset button (KEY0)
+set_location_assignment PIN_AJ4 -to reset
+
+# HEX0[6:0] 7-segment display (active low)
+set_location_assignment PIN_AF10 -to HEX0[0]
+set_location_assignment PIN_AE11 -to HEX0[1]
+set_location_assignment PIN_AD11 -to HEX0[2]
+set_location_assignment PIN_AC12 -to HEX0[3]
+set_location_assignment PIN_AF11 -to HEX0[4]
+set_location_assignment PIN_AD12 -to HEX0[5]
+set_location_assignment PIN_AE12 -to HEX0[6]
+
+# LEDR[1:0] debug output (verified working pins)
+set_location_assignment PIN_AJ21 -to LEDR[0]
+set_location_assignment PIN_AH17 -to LEDR[1]

@@ -1,0 +1,47 @@
+module counter_7seg (
+    input clk,               // 50 MHz clock from DE1-SoC
+    input reset,             // Reset button
+    output reg [6:0] HEX0    // HEX0 display
+);
+
+    reg [3:0] count = 0;     // 4-bit counter (0-9)
+
+    // 7-segment decoder: active-low segments (0 turns segment on)
+    always @(*) begin
+        case(count)
+            4'd0: HEX0 = 7'b100_0000;
+            4'd1: HEX0 = 7'b111_1001;
+            4'd2: HEX0 = 7'b010_0100;
+            4'd3: HEX0 = 7'b011_0000;
+            4'd4: HEX0 = 7'b001_1001;
+            4'd5: HEX0 = 7'b001_0010;
+            4'd6: HEX0 = 7'b000_0010;
+            4'd7: HEX0 = 7'b111_1000;
+            4'd8: HEX0 = 7'b000_0000;
+            4'd9: HEX0 = 7'b001_0000;
+            default: HEX0 = 7'b111_1111;
+        endcase
+    end
+
+    // Clock divider to slow down counting (about 0.5s at 50 MHz)
+    reg [23:0] clk_div = 0;
+    wire slow_clk = clk_div[23];
+
+    always @(posedge clk or posedge reset) begin
+        if (reset)
+            clk_div <= 0;
+        else
+            clk_div <= clk_div + 1;
+    end
+
+    // Counter update
+    always @(posedge slow_clk or posedge reset) begin
+        if (reset)
+            count <= 0;
+        else if (count == 9)
+            count <= 0;
+        else
+            count <= count + 1;
+    end
+
+endmodule
